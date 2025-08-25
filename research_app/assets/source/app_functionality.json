@@ -1,0 +1,56 @@
+{
+  "title": "App Functionality Assessment",
+  "description": "Please evaluate the functionality and features of the application",
+  "questions": [
+    {
+      "id": 1,
+      "question": "How reliable is the app's performance?",
+      "options": [
+        "Very Reliable",
+        "Reliable",
+        "Sometimes Unreliable",
+        "Unreliable"
+      ]
+    },
+    {
+      "id": 2,
+      "question": "How useful are the app's features for your needs?",
+      "options": [
+        "Very Useful",
+        "Useful",
+        "Somewhat Useful",
+        "Not Useful"
+      ]
+    },
+    {
+      "id": 3,
+      "question": "How fast does the app respond to your interactions?",
+      "options": [
+        "Very Fast",
+        "Fast",
+        "Moderate",
+        "Slow"
+      ]
+    },
+    {
+      "id": 4,
+      "question": "How likely are you to recommend this app to others?",
+      "options": [
+        "Very Likely",
+        "Likely",
+        "Unlikely",
+        "Very Unlikely"
+      ]
+    },
+    {
+      "id": 5,
+      "question": "How satisfied are you with the app's error handling?",
+      "options": [
+        "Very Satisfied",
+        "Satisfied",
+        "Neutral",
+        "Dissatisfied"
+      ]
+    }
+  ]
+}

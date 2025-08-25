@@ -1,0 +1,46 @@
+{
+  "title": "User Interface Satisfaction Survey",
+  "description": "Please answer the following questions about the user interface design",
+  "questions": [
+    {
+      "id": 1,
+      "question": "How satisfied are you with the overall user interface design?",
+      "options": [
+        "Very Satisfied",
+        "Satisfied", 
+        "Neutral",
+        "Dissatisfied"
+      ]
+    },
+    {
+      "id": 2,
+      "question": "How easy is it to navigate through the application?",
+      "options": [
+        "Very Easy",
+        "Easy",
+        "Moderate",
+        "Difficult"
+      ]
+    },
+    {
+      "id": 3,
+      "question": "How would you rate the visual appeal of the interface?",
+      "options": [
+        "Excellent",
+        "Good",
+        "Average",
+        "Poor"
+      ]
+    },
+    {
+      "id": 4,
+      "question": "How intuitive do you find the button placement and layout?",
+      "options": [
+        "Very Intuitive",
+        "Intuitive",
+        "Somewhat Intuitive",
+        "Not Intuitive"
+      ]
+    }
+  ]
+}

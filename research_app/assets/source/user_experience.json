@@ -1,0 +1,72 @@
+{
+  "title": "User Experience Evaluation",
+  "description": "Please provide feedback on your overall user experience",
+  "questions": [
+    {
+      "id": 1,
+      "question": "How would you rate your overall experience with this application?",
+      "options": [
+        "Excellent",
+        "Very Good",
+        "Good",
+        "Fair",
+        "Poor"
+      ]
+    },
+    {
+      "id": 2,
+      "question": "How likely are you to use this application again?",
+      "options": [
+        "Very Likely",
+        "Likely",
+        "Maybe",
+        "Unlikely",
+        "Very Unlikely"
+      ]
+    },
+    {
+      "id": 3,
+      "question": "How intuitive was the learning curve for this application?",
+      "options": [
+        "Very Intuitive",
+        "Intuitive",
+        "Moderate",
+        "Difficult",
+        "Very Difficult"
+      ]
+    },
+    {
+      "id": 4,
+      "question": "How satisfied are you with the application's features?",
+      "options": [
+        "Very Satisfied",
+        "Satisfied",
+        "Neutral",
+        "Dissatisfied",
+        "Very Dissatisfied"
+      ]
+    },
+    {
+      "id": 5,
+      "question": "How would you describe the application's performance?",
+      "options": [
+        "Excellent",
+        "Good",
+        "Average",
+        "Below Average",
+        "Poor"
+      ]
+    },
+    {
+      "id": 6,
+      "question": "How well does the application meet your expectations?",
+      "options": [
+        "Exceeds Expectations",
+        "Meets Expectations",
+        "Somewhat Meets Expectations",
+        "Below Expectations",
+        "Falls Short"
+      ]
+    }
+  ]
+}
