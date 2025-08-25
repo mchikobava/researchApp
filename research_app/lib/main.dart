@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'services/questionnaire_service.dart';
 import 'screens/questionnaire_screen.dart';
+import 'screens/responses_screen.dart';
+import 'services/storage_service.dart';
 
 void main() {
   runApp(const MyApp());
@@ -33,11 +35,13 @@ class _LandingPageState extends State<LandingPage> {
   List<String> availableQuestionnaires = [];
   bool isLoading = true;
   String? errorMessage;
+  int responseCount = 0;
 
   @override
   void initState() {
     super.initState();
     _loadQuestionnaires();
+    _loadResponseCount();
   }
 
   Future<void> _loadQuestionnaires() async {
@@ -55,6 +59,17 @@ class _LandingPageState extends State<LandingPage> {
     }
   }
 
+  Future<void> _loadResponseCount() async {
+    try {
+      final count = await StorageService.getResponseCount();
+      setState(() {
+        responseCount = count;
+      });
+    } catch (e) {
+      // Ignore errors for response count
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,6 +77,19 @@ class _LandingPageState extends State<LandingPage> {
         title: const Text('Your User Study'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         centerTitle: true,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.history),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const ResponsesScreen(),
+                ),
+              ).then((_) => _loadResponseCount()); // Refresh count when returning
+            },
+            tooltip: 'View saved responses',
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -69,6 +97,32 @@ class _LandingPageState extends State<LandingPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             const SizedBox(height: 40),
+            
+            // Response count badge
+            if (responseCount > 0)
+              Container(
+                margin: const EdgeInsets.only(bottom: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                decoration: BoxDecoration(
+                  color: Colors.green[100],
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: Colors.green[300]!),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(Icons.check_circle, color: Colors.green, size: 16),
+                    const SizedBox(width: 8),
+                    Text(
+                      '$responseCount response${responseCount == 1 ? '' : 's'} saved',
+                      style: const TextStyle(
+                        color: Colors.green,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             
             // Welcome text
             const Text(

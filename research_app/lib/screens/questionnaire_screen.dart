@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/questionnaire.dart';
+import '../services/storage_service.dart';
 
 class QuestionnaireScreen extends StatefulWidget {
   final Questionnaire questionnaire;
@@ -198,7 +199,7 @@ class _QuestionnaireScreenState extends State<QuestionnaireScreen> {
     );
   }
 
-  void _showResults() {
+  void _showResults() async {
     final responses = widget.questionnaire.questions.map((question) {
       return QuestionAnswer(
         questionId: question.id,
@@ -212,32 +213,98 @@ class _QuestionnaireScreenState extends State<QuestionnaireScreen> {
       answers: responses,
     );
 
+    // Show saving dialog
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Survey Complete!'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
+        return const AlertDialog(
+          content: Row(
             children: [
-              Text('Thank you for completing the "${widget.questionnaire.title}"'),
-              const SizedBox(height: 16),
-              const Text('Your responses have been recorded.'),
+              CircularProgressIndicator(),
+              SizedBox(width: 16),
+              Text('Saving your responses...'),
             ],
           ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(); // Close dialog
-                Navigator.of(context).pop(); // Go back to main screen
-              },
-              child: const Text('OK'),
-            ),
-          ],
         );
       },
     );
+
+    try {
+      // Save the response to device storage
+      await StorageService.saveResponse(questionnaireResponse);
+      
+      // Close saving dialog
+      Navigator.of(context).pop();
+      
+      // Show success dialog
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Survey Complete!'),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Thank you for completing the "${widget.questionnaire.title}"'),
+                const SizedBox(height: 16),
+                const Text('Your responses have been saved to your device.'),
+                const SizedBox(height: 8),
+                const Text(
+                  'You can view your saved responses from the main menu.',
+                  style: TextStyle(fontSize: 12, color: Colors.grey),
+                ),
+              ],
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(); // Close dialog
+                  Navigator.of(context).pop(); // Go back to main screen
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    } catch (e) {
+      // Close saving dialog
+      Navigator.of(context).pop();
+      
+      // Show error dialog
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Error'),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text('Failed to save your responses.'),
+                const SizedBox(height: 8),
+                Text(
+                  'Error: $e',
+                  style: const TextStyle(fontSize: 12, color: Colors.red),
+                ),
+              ],
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(); // Close dialog
+                  Navigator.of(context).pop(); // Go back to main screen
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 }
